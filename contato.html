@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h1>JP Sousa</h1>
+            </div>
+            <nav class="menu">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="sobre.html">Sobre Mim</a></li>
+                    <li><a href="formacao.html">Formação</a></li>
+                    <li><a href="portfolio.html">Portfólio</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="content">
+            <h1>Contato</h1>
+            <form id="contact-form" method="POST" action="https://formspree.io/f/{YOUR_FORM_ID}">
+                <label for="name">Nome:</label><br>
+                <input type="text" id="name" name="name" required><br><br>
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="_replyto" required><br><br>
+                <label for="message">Mensagem:</label><br>
+                <textarea id="message" name="message" required></textarea><br><br>
+                <button type="submit">Enviar</button>
+            </form>
+            <p id="response-message"></p>
+        </main>
+    </div>
+    <footer>
+        <p>&copy; 2024 José Paulo Mendes de Oliveira Sousa</p>
+    </footer>
+
+    <script>
+        $(document).ready(function() {
+            $('#contact-form').on('submit', function(e) {
+                e.preventDefault();
+
+                const name = $('#name').val();
+                const email = $('#email').val();
+                const message = $('#message').val();
+                const formattedMessage = `Olá, meu nome é ${name};\n\nQueria tirar a seguinte dúvida:\n${message}\n\nMeu e-mail para contato:\n${email}`;
+
+                $.ajax({
+                    url: 'https://formspree.io/f/{https://formspree.io/f/xpwapgpe}', 
+                    method: 'POST',
+                    data: {
+                        _replyto: email,
+                        message: formattedMessage
+                    },
+                    dataType: 'json',
+                    success: function() {
+                        $('#response-message').text('Mensagem enviada com sucesso!');
+                        $('#contact-form')[0].reset();
+                    },
+                    error: function() {
+                        $('#response-message').text('Ocorreu um erro ao enviar a mensagem. Tente novamente.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
